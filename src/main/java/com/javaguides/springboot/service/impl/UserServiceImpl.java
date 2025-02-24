@@ -5,7 +5,8 @@ import com.javaguides.springboot.repository.UserRepository;
 import com.javaguides.springboot.service.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Predicate;
+import java.util.List;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,5 +24,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("api")
@@ -31,5 +33,11 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(userById, HttpStatus.OK);
+    }
+
+    @GetMapping("usersList")
+    public ResponseEntity<List<User>> getAllUsers(){
+        List<User> userList = userService.getAllUsers();
+        return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 }
