@@ -1,14 +1,12 @@
 package com.javaguides.springboot.controller;
 
 import com.javaguides.springboot.entity.User;
+import com.javaguides.springboot.exception.NotFoundException;
 import com.javaguides.springboot.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
@@ -22,5 +20,16 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody  User user){
         User savedUser =  userService.createUser(user);
         return new ResponseEntity<>(savedUser , HttpStatus.CREATED);
+    }
+
+    //build get user by id REST API
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserByID(@PathVariable("id") Long userId) throws Exception {
+        User userById = userService.getUserById(userId);
+        if(userById == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(userById, HttpStatus.OK);
     }
 }
